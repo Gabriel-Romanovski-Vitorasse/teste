@@ -9,6 +9,8 @@
     <RootNamespace>EloEventos</RootNamespace>
     <AssemblyName>EloEventos</AssemblyName>
     <EnableWindowsTargeting>true</EnableWindowsTargeting>
+    <!-- Permite executar em máquinas que só têm um runtime mais novo (ex.: .NET 9 ou 10) instalado. -->
+    <RollForward>LatestMajor</RollForward>
   </PropertyGroup>
 
   <ItemGroup>
