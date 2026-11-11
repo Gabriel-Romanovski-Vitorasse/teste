@@ -6,10 +6,14 @@ Implementação em WPF das 9 telas do arquivo Figma **Sistema de Gestão de Even
 
 Requisitos: Windows 10/11 e [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0) (ou Visual Studio 2022 com a carga ".NET desktop").
 
+Na pasta do projeto (onde está o `EloEventos.csproj`):
+
 ```powershell
-cd EloEventos
 dotnet run
 ```
+
+No Visual Studio, abra o `EloEventos.csproj` e pressione F5.
+O projeto é compilado para .NET 8, mas também executa se a máquina só tiver um runtime mais novo (.NET 9/10).
 
 Na primeira compilação o projeto:
 - restaura o pacote **SharpVectors.Wpf**, que exibe os ícones SVG exatamente como foram exportados do Figma;
