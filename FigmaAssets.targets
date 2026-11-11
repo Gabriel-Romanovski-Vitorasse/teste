@@ -1,0 +1,46 @@
+<Project>
+  <!--
+    Ícones e imagens exportados do Figma ("Sistema de Gestão de Eventos").
+    Os links são temporários: o Figma os mantém válidos por 7 dias a partir de 10/11/2026.
+    Na primeira compilação, cada arquivo que ainda não existir em Assets\ é baixado.
+    Depois disso os arquivos ficam no projeto e a internet não é mais necessária.
+  -->
+  <PropertyGroup>
+    <FigmaA>https://www.figma.com/api/mcp/asset/bf688465-245d-46bd-81e7-9d8acba49b31</FigmaA>
+    <FigmaB>https://www.figma.com/api/mcp/asset/895a4c02-333f-46b2-84e1-80e06c26734c</FigmaB>
+    <FigmaC>https://www.figma.com/api/mcp/asset/2a847fe1-ee0b-4f4e-b240-55f1925f7101</FigmaC>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <FigmaAsset Include="Assets\Icons\calendar-days.svg"  Url="$(FigmaA)/d5557.svg" />
+    <FigmaAsset Include="Assets\Icons\bell.svg"           Url="$(FigmaA)/96b6e.svg" />
+    <FigmaAsset Include="Assets\Icons\chevron-down.svg"   Url="$(FigmaA)/ecf93.svg" />
+    <FigmaAsset Include="Assets\Icons\chevron-left.svg"   Url="$(FigmaA)/ea609.svg" />
+    <FigmaAsset Include="Assets\Icons\chevron-right.svg"  Url="$(FigmaA)/42374.svg" />
+    <FigmaAsset Include="Assets\Icons\arrow-up-right.svg" Url="$(FigmaA)/32bdf.svg" />
+    <FigmaAsset Include="Assets\Icons\search.svg"         Url="$(FigmaA)/a9d4a.svg" />
+    <FigmaAsset Include="Assets\Icons\map-pin.svg"        Url="$(FigmaB)/1f17c.svg" />
+    <FigmaAsset Include="Assets\Icons\users.svg"          Url="$(FigmaB)/072a7.svg" />
+    <FigmaAsset Include="Assets\Icons\info.svg"           Url="$(FigmaB)/652a1.svg" />
+    <FigmaAsset Include="Assets\Images\conferencia-em-destaque.png" Url="$(FigmaA)/868d9.png" />
+    <FigmaAsset Include="Assets\Images\auditorio-do-encontro.png"   Url="$(FigmaB)/85199.png" />
+    <FigmaAsset Include="Assets\Images\interior-do-local.png"       Url="$(FigmaC)/60b4c.png" />
+  </ItemGroup>
+
+  <Target Name="DownloadFigmaAssets" BeforeTargets="PrepareForBuild">
+    <DownloadFile SourceUrl="%(FigmaAsset.Url)"
+                  DestinationFolder="$(MSBuildProjectDirectory)\%(FigmaAsset.RelativeDir)"
+                  DestinationFileName="%(FigmaAsset.Filename)%(FigmaAsset.Extension)"
+                  Retries="2"
+                  ContinueOnError="true"
+                  Condition="!Exists('$(MSBuildProjectDirectory)\%(FigmaAsset.Identity)')" />
+
+    <Error Condition="!Exists('$(MSBuildProjectDirectory)\%(FigmaAsset.Identity)')"
+           Text="Não foi possível baixar %(FigmaAsset.Identity) do Figma. Os links expiram 7 dias após a exportação: exporte o ícone/imagem do Figma e salve-o nesse caminho." />
+
+    <!-- Inclui como Resource os arquivos baixados nesta mesma compilação. -->
+    <ItemGroup>
+      <Resource Include="@(FigmaAsset)" Exclude="@(Resource)" />
+    </ItemGroup>
+  </Target>
+</Project>
